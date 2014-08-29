@@ -2,10 +2,10 @@
 """Surge: cryptocurrency data downloader.
 
 Downloads cryptocurrency price data from the public APIs of BitcoinAverage,
-CryptoCoinCharts, and CoinMarketCap, and writes to a CSV file (default),
-or to a relational database, such as MySQL or PostgreSQL.
+CryptoCoinCharts, and CoinMarketCap, and writes to a PostgreSQL database.
 
-Usage:
+@author Jack Peterson
+@license MIT
 
 """
 from __future__ import division, unicode_literals
@@ -32,14 +32,6 @@ except:
     import psycopg2cffi.extensions as ext
     from psycopg2cffi.extras import RealDictCursor
 
-__title__      = "surge"
-__version__    = "0.1"
-__author__     = "Jack Peterson"
-__copyright__  = "Copyright 2014, Dyffy Inc."
-__license__    = "MIT"
-__maintainer__ = "Jack Peterson"
-__email__      = "jack@tinybike.net"
-
 _IS_PYTHON_3 = (platform.version() >= '3')
 identity = lambda x : x
 if _IS_PYTHON_3:
@@ -56,10 +48,10 @@ CRYPTOCOINCHARTS_API = "http://www.cryptocoincharts.info/v2/api/"
 BITTREX_API = "https://bittrex.com/api/v1.1/"
 
 # postgres connection
-conn = db.connect("host=localhost dbname=analytics user=analytics")
+conn = db.connect("host=localhost dbname=surge user=surge")
 conn.set_isolation_level(ext.ISOLATION_LEVEL_READ_COMMITTED)
 
-class MarketDataTracker(object):
+class Surge(object):
     """
     Download coin price and volume data from third-party APIs
     """
@@ -221,17 +213,6 @@ class MarketDataTracker(object):
             print "Update CryptoCoinCharts data:"
         btc_digits = Decimal(currency_precision('BTC'))
         btc_price = None
-        # query = """SELECT price FROM coin_data
-        #            WHERE ticker = 'BTC'
-        #            ORDER BY last_update DESC"""
-        # with cursor() as cur:
-        #     cur.execute(query)
-        #     if cur.rowcount:
-        #         btc_price = cur.fetchone()[0]
-        # if btc_price is None:
-        # if self.verbose:
-        #     print "- No entry for BTC found in coin_data"
-        #     print "- Fetching BTC price from BitcoinAverage for comparison"
         btc_price = requests.get(BITCOINAVERAGE_API + "ticker/USD/last").json()
         btc_price = Decimal(btc_price).quantize(btc_digits,
                                                 rounding=ROUND_HALF_EVEN)
@@ -389,13 +370,12 @@ def main(argv=None):
             parameters['interval'] = float(arg)
         elif opt in ('-m', '--max-retry'):
             parameters['max_retry'] = int(arg)
-    mdt = MarketDataTracker(**parameters)
+    surge = Surge(**parameters)
     if run_loop:
-        mdt.update_loop()
+        surge.update_loop()
     else:
-        # mdt.update_bitcoinaverage()
-        mdt.update_cryptocoincharts()
-        mdt.bittrex_orderbook_snapshot()
+        surge.update_cryptocoincharts()
+        surge.bittrex_orderbook_snapshot()
     try:
         if conn:
             conn.close()
