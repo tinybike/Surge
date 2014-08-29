@@ -5,7 +5,6 @@ Downloads cryptocurrency price data from the public APIs of BitcoinAverage,
 CryptoCoinCharts, and CoinMarketCap, and writes to a PostgreSQL database.
 
 @author Jack Peterson
-@license MIT
 
 """
 from __future__ import division, unicode_literals
