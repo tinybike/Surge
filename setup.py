@@ -16,8 +16,6 @@ setup(
     url="https://github.com/tensorjack/surge",
     download_url = 'https://github.com/tensorjack/surge/tarball/0.1',
     packages=["surge"],
-    include_package_data=True,
-    package_data={"surge": ["./data/coins.json", "./bitcoin-listen"]},
-    install_requires=["psycopg2",],
-    keywords = ["bitcoin", "download", "altcoin", "data"]
+    install_requires=["psycopg2", "requests"],
+    keywords = ["bitcoin", "download", "altcoin", "data", "analytics"]
 )
