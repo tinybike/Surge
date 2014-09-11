@@ -10,4 +10,8 @@ install:
   - "easy_install -U setuptools"
   - "pip install ."
   - "pip install -r requirements.txt"
-script: echo
+  - "pip install -r test_requirements.txt"
+script:
+  - py.test test/runtests.py --doctest-modules -v --cov surge --cov-report term-missing
+after_success:
+  - coveralls
