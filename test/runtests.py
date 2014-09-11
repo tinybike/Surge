@@ -4,6 +4,7 @@ Surge unit tests.
 
 """
 from __future__ import division, print_function, unicode_literals, absolute_import
+import sys
 import os
 import platform
 from decimal import Decimal, ROUND_HALF_EVEN, getcontext
