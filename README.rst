@@ -3,7 +3,10 @@ Surge
 
 .. image:: https://travis-ci.org/tensorjack/surge.svg
     :target: https://travis-ci.org/tensorjack/surge
-.. image:: https://coveralls.io/repos/tensorjack/surge/badge.png :target: https://coveralls.io/r/tensorjack/surge
+
+.. image:: https://coveralls.io/repos/tensorjack/surge/badge.png
+  :target: https://coveralls.io/r/tensorjack/surge
+
 
 Surge downloads cryptocurrency price and volume data from public data APIs.  Currently, it downloads from BitcoinAverage, CryptoCoinCharts, and Bittrex; I'll be adding more exchange-specific pipelines as time permits.
 
