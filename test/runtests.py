@@ -6,16 +6,12 @@ Surge unit tests.
 from __future__ import division, print_function, unicode_literals, absolute_import
 import sys
 import os
-import platform
 from decimal import Decimal, ROUND_HALF_EVEN, getcontext
 import psycopg2 as db
 import psycopg2.extensions as ext
 from psycopg2.extras import RealDictCursor
 
-if platform.python_version() < "2.7":
-    unittest = __import__("unittest2")
-else:
-    import unittest
+import unittest
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(HERE, os.pardir, "surge"))
