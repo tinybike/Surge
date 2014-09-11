@@ -6,7 +6,7 @@ try:
 except:
     pass
 
-__title__      = "grapple"
+__title__      = "surge"
 __version__    = "0.1"
 __author__     = "Jack Peterson"
 __license__    = "MIT"
